@@ -1,0 +1,39 @@
+---
+description: Real solutions, one laws layer, no patch files
+alwaysApply: true
+---
+
+# Domain architecture
+
+Fix the law, not the symptom. Do not add one-off checks, special-case IDs, or extra files that paper over a broken rule.
+
+## Layers (keep these; do not add parallel copies)
+
+- `lib/domain/models/` — bottles, layers, levels, objectives
+- `lib/domain/rules/` — PourRules, BlockerRules, WinRules (the only game laws)
+- `lib/domain/engine/` — PuzzleEngine session only; it must call rules, not reimplement them
+- `lib/domain/solver/` — LevelSolver uses the same rules as live play
+- `lib/domain/levels/` — LevelQa (one ship door), LevelCatalog, onboard levels
+- `lib/domain/generator/` — BoardScrambler + LevelGenerator (reverse-from-solved)
+
+## Ship door
+
+A vial ships only if `LevelQa` says so: legal color counts, no leftover extras, crystal lids can crack, not already sorted, and the solver finds a real win of at least `GameConfig.minPlayableMoves(id)` pours.
+
+Live play win = `WinRules.meetsWin`. Solver win = the same method. Never a second definition.
+
+## Generation
+
+Build from a solved board, scramble until unsorted, then apply mechanics. Never emit a pre-solved board or a layout the QA door would reject.
+
+## Examples
+
+```dart
+// BAD — patch around vial 16 / 22 / 31
+if (level.id == 31) scrambleAgain();
+if (bottle.id == 0) bottle.crystal = false;
+
+// GOOD — the rule forbids the class of bug
+if (WinRules.isBoardSorted(bottles)) reject;
+if (!LevelQa.isPlayable(level)) do not ship;
+```

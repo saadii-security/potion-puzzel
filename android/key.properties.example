@@ -1,0 +1,8 @@
+# This is an example of key.properties.
+# Copy this file to 'key.properties' in the same directory and fill in your actual keystore details.
+# DO NOT commit your actual 'key.properties' or keystore files to version control.
+
+storePassword=your_keystore_password
+keyPassword=your_key_password
+keyAlias=upload
+storeFile=upload-keystore.jks

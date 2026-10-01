@@ -1,0 +1,45 @@
+name: potion_sort
+description: Potion Sort Adventure — a magical alchemy puzzle.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flame: ^1.34.0
+  shared_preferences: ^2.5.3
+  flame_audio: ^2.12.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon_master.png"
+  adaptive_icon_background: "#2D0878"
+  adaptive_icon_foreground: "assets/icon_master.png"
+  remove_alpha_ios: true
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/candy_background.png
+    - assets/candy_mascot.png
+    - assets/candy_emblem.png
+    - assets/audio/
+    - assets/icons/
+
+  fonts:
+    - family: Candy
+      fonts:
+        - asset: assets/fonts/FredokaOne-Regular.ttf
+    - family: CandyBody
+      fonts:
+        - asset: assets/fonts/Nunito-ExtraBold.ttf

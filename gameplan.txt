@@ -1,0 +1,2663 @@
+# MASTER GAME DEVELOPMENT PROMPT
+
+## Project: Potion Sort Adventure
+
+### Genre: Casual Puzzle / Sorting / Match-Combo / Progression
+
+### Platform: Android first, iOS-ready architecture
+
+### Technology: Flutter + Flame (where appropriate) / native Flutter animations
+
+### Backend: Supabase
+
+### Target: Highly polished, scalable mobile game
+
+---
+
+# 1. ROLE
+
+You are a senior mobile game designer, game systems designer, Flutter engineer, UI/UX designer, puzzle-game mathematician, monetization designer, and mobile-game product strategist.
+
+Your task is to design and implement a production-quality casual puzzle game called:
+
+# POTION SORT ADVENTURE
+
+The game combines:
+
+1. The simple and satisfying liquid/color sorting mechanic found in Water Sort-style games.
+2. The progression, level map, objectives, boosters, blockers, stars, events, and retention systems commonly found in successful match/puzzle games such as Candy Crush.
+3. Original potion/laboratory fantasy theming.
+4. A strong collection and progression system.
+5. Fair monetization without aggressive advertising.
+
+IMPORTANT:
+
+Do NOT create a direct clone of Water Sort, Candy Crush, or any other existing game.
+
+Use only high-level genre conventions and create original:
+
+* mechanics
+* visuals
+* UI
+* level structures
+* terminology
+* progression
+* characters
+* artwork
+* animations
+* economy
+* game identity
+
+The final game must feel like its own product.
+
+---
+
+# 2. CORE GAME VISION
+
+The game should answer this question:
+
+"What if Water Sort had the progression, objectives, boosters, special mechanics, and excitement of a modern puzzle game?"
+
+The player sorts colorful magical potions inside bottles.
+
+However, completing a level is not always simply:
+
+"Sort every bottle."
+
+Levels can have different objectives.
+
+The player must:
+
+SORT → PLAN → COMBINE → CREATE SPECIAL POTIONS → COMPLETE OBJECTIVE → EARN STARS → REWARD → PROGRESS
+
+The game should remain:
+
+* easy to understand
+* satisfying
+* relaxing
+* visually rewarding
+* increasingly strategic
+* difficult without feeling unfair
+* highly replayable
+
+---
+
+# 3. TARGET AUDIENCE
+
+Primary:
+
+* Casual mobile gamers
+* Puzzle gamers
+* Water Sort players
+* Match-3 players
+* Players aged approximately 13+
+* Players who enjoy relaxing games
+* Short-session players
+
+Session target:
+
+2–10 minutes.
+
+The game should be playable offline for the majority of core gameplay.
+
+Internet should primarily be required for:
+
+* cloud save
+* leaderboards
+* events
+* rewarded ads
+* purchases
+* analytics
+* account synchronization
+
+---
+
+# 4. CORE GAMEPLAY
+
+The basic game board consists of potion bottles.
+
+Each bottle has a fixed capacity.
+
+Example:
+
+Bottle capacity = 4 layers.
+
+A bottle might contain:
+
+RED
+RED
+BLUE
+GREEN
+
+The player taps a bottle and then another bottle.
+
+The game checks whether the move is legal.
+
+A potion may be poured when:
+
+1. The destination bottle has available capacity.
+2. The destination is empty OR its top color matches the source's top color.
+3. The move does not violate a special mechanic.
+4. Any required blocker condition has been satisfied.
+
+When pouring:
+
+* animate the liquid physically
+* use smooth transitions
+* show liquid movement
+* use subtle sound
+* avoid instant teleportation
+
+The player should immediately understand what happened.
+
+---
+
+# 5. WIN CONDITION
+
+The standard level win condition is:
+
+Every normal bottle contains only one color.
+
+Example:
+
+RED RED RED RED
+BLUE BLUE BLUE BLUE
+GREEN GREEN GREEN GREEN
+YELLOW YELLOW YELLOW YELLOW
+
+Empty bottles are allowed where the level definition permits them.
+
+However, not every level should use the standard win condition.
+
+The level engine must support multiple win conditions.
+
+---
+
+# 6. LEVEL OBJECTIVES
+
+Implement a flexible objective system.
+
+Supported objective types should include:
+
+## Objective A — SORT ALL
+
+Sort every bottle.
+
+This is the classic mode.
+
+---
+
+## Objective B — COLLECT COLOR
+
+Example:
+
+Collect:
+
+RED × 10
+
+The player completes the objective when enough red potion has been correctly placed.
+
+---
+
+## Objective C — BREAK BLOCKERS
+
+Example:
+
+Break 5 crystal blockers.
+
+---
+
+## Objective D — LIMITED MOVES
+
+Complete the puzzle within a maximum number of moves.
+
+Example:
+
+Maximum moves = 30.
+
+---
+
+## Objective E — COMBO
+
+Create a specified number of special potions.
+
+Example:
+
+Create 3 Bomb Potions.
+
+---
+
+## Objective F — FREEZE BREAK
+
+Destroy all frozen potion layers.
+
+---
+
+## Objective G — TARGET BOTTLE
+
+Fill a specific bottle with a required color.
+
+---
+
+## Objective H — RAINBOW CREATION
+
+Create one or more Rainbow Potions.
+
+---
+
+## Objective I — SURVIVAL
+
+Prevent special hazardous potions from triggering before completing the objective.
+
+---
+
+## Objective J — MULTI-OBJECTIVE
+
+Example:
+
+* Sort all normal bottles
+* Break 3 crystals
+* Complete within 35 moves
+
+The level engine must support multiple objectives simultaneously.
+
+---
+
+# 7. SPECIAL POTIONS
+
+The game needs original special mechanics that gradually increase complexity.
+
+Do not introduce all mechanics at the beginning.
+
+Use controlled progression.
+
+---
+
+## 7.1 RAINBOW POTION
+
+Visual:
+
+🌈
+
+Function:
+
+Can match any color.
+
+It should be extremely useful but limited.
+
+Possible behavior:
+
+Rainbow adapts to the color it is poured next to.
+
+---
+
+# 8. BOMB POTION
+
+Visual:
+
+A glowing unstable potion.
+
+Function:
+
+When properly completed/activated, it clears a predefined set of potion layers.
+
+Example:
+
+Clear one entire bottle.
+
+Later upgrade:
+
+Clear adjacent bottles.
+
+Do not make this mechanic random.
+
+The player should understand exactly what will happen.
+
+---
+
+# 9. LIGHTNING POTION
+
+Function:
+
+Clears a particular color across multiple bottles.
+
+Example:
+
+Activate blue lightning.
+
+All exposed BLUE layers on the board are removed.
+
+Use carefully because this can make levels trivial.
+
+---
+
+# 10. WILD POTION
+
+A Wild Potion can transform into the required destination color.
+
+Example:
+
+WILD + RED
+
+becomes:
+
+RED
+
+This mechanic should appear later in progression.
+
+---
+
+# 11. FROZEN POTION
+
+Frozen layers cannot be poured until the freeze condition is satisfied.
+
+Possible rules:
+
+* Sort neighboring bottle
+* Match required color
+* Complete a mini objective
+* Use a booster
+
+---
+
+# 12. LOCKED BOTTLE
+
+A bottle displays a lock.
+
+The player cannot interact with it until a condition is met.
+
+Examples:
+
+* Complete another bottle
+* Break 3 crystals
+* Collect 10 red potions
+
+---
+
+# 13. CRYSTAL BLOCKER
+
+Crystal blocks a layer.
+
+The player must complete a condition to destroy it.
+
+The crystal should visibly crack and break.
+
+Use satisfying animation.
+
+---
+
+# 14. MYSTERY POTION
+
+A hidden potion layer whose color is unknown until exposed.
+
+Important:
+
+Do not make this purely luck-based.
+
+The player should have enough information to make a strategic decision.
+
+---
+
+# 15. PORTAL BOTTLE
+
+Introduced at advanced levels.
+
+A portal connects two bottles.
+
+Pouring through the portal moves potion according to clearly defined rules.
+
+Make the mechanic intuitive.
+
+---
+
+# 16. POISON POTION
+
+Poison cannot freely mix with normal potions.
+
+The player must isolate or dispose of it.
+
+This creates advanced strategic levels.
+
+---
+
+# 17. SPECIAL COMBO SYSTEM
+
+This is one of the most important differentiators.
+
+Correct sorting actions can generate special potions.
+
+Example:
+
+Complete a high-value sequence:
+
+4 matching layers
+
+↓
+
+Create:
+
+BOMB POTION
+
+Another sequence:
+
+5 matching layers
+
+↓
+
+Create:
+
+LIGHTNING POTION
+
+Special conditions may create:
+
+RAINBOW
+
+WILD
+
+BOMB
+
+LIGHTNING
+
+The player should feel:
+
+"I just made something powerful."
+
+---
+
+# 18. COMBO SYSTEM
+
+Track efficient consecutive actions.
+
+Example:
+
+SORT COMBO ×2
+
+SORT COMBO ×3
+
+SORT COMBO ×4
+
+Provide subtle visual feedback.
+
+Do NOT make the UI excessively noisy.
+
+Combo rewards can include:
+
+* coins
+* score multiplier
+* temporary booster charge
+* special potion creation
+
+---
+
+# 19. BOOSTER SYSTEM
+
+Create boosters inspired by puzzle-game conventions but with original implementation.
+
+## Booster 1 — EXTRA BOTTLE
+
+Adds one temporary empty bottle.
+
+---
+
+## Booster 2 — REWIND
+
+Undo several previous moves.
+
+---
+
+## Booster 3 — COLOR BLAST
+
+Remove all exposed layers of one selected color.
+
+---
+
+## Booster 4 — SHUFFLE
+
+Rearranges eligible unsolved potion layers.
+
+It must not produce an impossible board.
+
+---
+
+## Booster 5 — RAINBOW
+
+Adds a Rainbow Potion.
+
+---
+
+## Booster 6 — BOTTLE CLEAR
+
+Clears a selected bottle.
+
+---
+
+## Booster 7 — HINT
+
+Shows a recommended legal move.
+
+The hint system must calculate an actual useful move.
+
+Never provide a random move.
+
+---
+
+# 20. BOOSTER RULES
+
+Boosters should:
+
+* feel powerful
+* not completely replace thinking
+* be limited
+* be earnable
+* be purchasable
+* optionally be obtainable through rewarded ads
+
+Do not design the economy so players are forced to purchase boosters.
+
+---
+
+# 21. THREE-STAR SYSTEM
+
+Every level should support:
+
+⭐ 1 star
+
+Complete the level.
+
+⭐⭐ 2 stars
+
+Complete under a defined move/time threshold.
+
+⭐⭐⭐ 3 stars
+
+Complete under an advanced threshold.
+
+The thresholds should be generated based on the actual puzzle difficulty.
+
+Do NOT hardcode arbitrary thresholds for every level.
+
+---
+
+# 22. LEVEL REPLAY
+
+Players must be able to replay completed levels.
+
+Show:
+
+* Previous best
+* Best moves
+* Current moves
+* Stars
+* Score
+
+Example:
+
+LEVEL 42
+
+Best:
+⭐ ⭐ ⭐
+
+Best moves:
+24
+
+Current:
+27
+
+Encourage mastery.
+
+---
+
+# 23. LEVEL MAP
+
+Do NOT use a boring vertical list.
+
+Create a Candy-Crush-inspired progression map but make the visual identity completely original.
+
+Example world:
+
+THE ENCHANTED LAB
+
+Nodes:
+
+1 → 2 → 3 → 4 → 5
+
+Then branching paths where appropriate.
+
+Every world should have a unique visual environment.
+
+---
+
+# 24. WORLDS
+
+Initial world structure:
+
+## WORLD 1 — ENCHANTED FOREST
+
+Levels 1–50
+
+Introduce:
+
+* basic sorting
+* stars
+* simple objectives
+
+---
+
+## WORLD 2 — MAGIC CASTLE
+
+Levels 51–100
+
+Introduce:
+
+* locked bottles
+* crystals
+* more colors
+* harder puzzles
+
+---
+
+## WORLD 3 — DRAGON VOLCANO
+
+Levels 101–150
+
+Introduce:
+
+* bomb potion
+* heat/pressure mechanics
+* limited moves
+
+---
+
+## WORLD 4 — FROZEN KINGDOM
+
+Levels 151–200
+
+Introduce:
+
+* frozen layers
+* ice blockers
+* advanced combinations
+
+---
+
+## WORLD 5 — UNDERWATER LAB
+
+Levels 201–250
+
+Introduce:
+
+* portals
+* mystery layers
+* advanced objectives
+
+---
+
+## WORLD 6 — COSMIC LAB
+
+Levels 251–300
+
+Introduce:
+
+* rainbow
+* wild
+* complex combinations
+
+The architecture must support adding unlimited future worlds.
+
+---
+
+# 25. BOSS LEVELS
+
+Every 25 or 50 levels should contain a special challenge.
+
+Example:
+
+LEVEL 50
+
+BOSS:
+
+THE CHAOS ALCHEMIST
+
+Characteristics:
+
+* more bottles
+* multiple objectives
+* blockers
+* special mechanics
+* limited moves
+
+Boss levels should not be combat games.
+
+They are special puzzle encounters.
+
+After completing:
+
+BOSS DEFEATED
+
+Give:
+
+* large coin reward
+* gems
+* rare cosmetic
+* booster bundle
+* world unlock
+
+---
+
+# 26. DAILY CHALLENGE
+
+Every day create one special puzzle.
+
+Everyone should receive the same puzzle for that date.
+
+Show:
+
+DAILY POTION
+
+Puzzle #438
+
+Best:
+
+27 moves
+
+Your result:
+
+32 moves
+
+Rank:
+
+Top 18%
+
+The daily challenge should have a separate leaderboard.
+
+---
+
+# 27. DAILY STREAK
+
+Reward consecutive daily participation.
+
+Example:
+
+Day 1 → Coins
+
+Day 2 → Coins
+
+Day 3 → Booster
+
+Day 4 → Gems
+
+Day 5 → Booster
+
+Day 6 → Rare cosmetic fragment
+
+Day 7 → Premium reward
+
+Do not make missing one day excessively punishing.
+
+---
+
+# 28. EVENTS
+
+Build the system so temporary events can be added remotely.
+
+Examples:
+
+## OCEAN WEEK
+
+Complete 20 levels.
+
+Reward:
+
+Aquarium Bottle.
+
+---
+
+## GALAXY WEEK
+
+Complete 30 levels.
+
+Reward:
+
+Galaxy Potion Theme.
+
+---
+
+## HALLOWEEN
+
+Special visuals.
+
+---
+
+## CHRISTMAS
+
+Limited cosmetics.
+
+---
+
+Events should be configuration-driven rather than requiring an app update whenever possible.
+
+---
+
+# 29. COLLECTION SYSTEM
+
+Players can collect:
+
+## Bottle skins
+
+* Glass
+* Crystal
+* Wizard
+* Ancient
+* Galaxy
+* Dragon
+* Royal
+
+## Potion themes
+
+* Ocean
+* Candy
+* Lava
+* Ice
+* Galaxy
+* Forest
+* Rainbow
+
+## Laboratory decorations
+
+* Plants
+* Books
+* Crystals
+* Candles
+* Magical equipment
+* Small creatures
+
+The collection system must be cosmetic-first.
+
+Do not make cosmetics pay-to-win.
+
+---
+
+# 30. PLAYER LAB
+
+Give every player a personal laboratory.
+
+The lab evolves as the player progresses.
+
+Example:
+
+START:
+
+Small empty laboratory.
+
+After level 25:
+
+Unlock:
+
+* table
+* bookshelf
+* potion rack
+
+After level 50:
+
+Unlock:
+
+* magical cauldron
+* crystal shelf
+
+After level 100:
+
+Unlock:
+
+* dragon artifact
+
+This gives players a persistent sense of ownership.
+
+---
+
+# 31. ECONOMY
+
+Use three primary currencies.
+
+## COINS
+
+Common currency.
+
+Earn from:
+
+* levels
+* daily rewards
+* achievements
+* events
+
+Used for:
+
+* basic boosters
+* cosmetic unlocks
+
+---
+
+## GEMS
+
+Premium currency.
+
+Earn from:
+
+* achievements
+* events
+* streaks
+* optional rewarded ads
+* purchases
+
+Used for:
+
+* premium boosters
+* special cosmetics
+* limited offers
+
+---
+
+## STARS
+
+Progression currency.
+
+Stars unlock:
+
+* worlds
+* lab upgrades
+* special content
+
+Stars should primarily come from level completion.
+
+---
+
+# 32. MONETIZATION PHILOSOPHY
+
+The game must not become an ad simulator.
+
+Avoid:
+
+* banner ads during gameplay
+* ad after every level
+* ads interrupting active puzzle solving
+* deceptive reward buttons
+* forced ad chains
+
+Preferred model:
+
+## Rewarded Ads
+
+Optional.
+
+Examples:
+
+"Watch an ad to get +1 bottle."
+
+"Watch an ad to receive a hint."
+
+"Watch an ad to double your level reward."
+
+---
+
+## Interstitial Ads
+
+Use controlled frequency.
+
+Default:
+
+No interstitial immediately after every level.
+
+Use a cooldown/frequency cap.
+
+Example:
+
+Maximum 1 forced interstitial every 3–5 completed standard levels.
+
+Never show an interstitial:
+
+* during gameplay
+* during a critical interaction
+* immediately after a purchase
+* immediately after a rewarded ad
+
+Allow remote configuration.
+
+---
+
+# 33. REMOVE ADS
+
+Initial IAP:
+
+REMOVE ADS
+
+Suggested price range:
+
+$2.99–$4.99 depending on market.
+
+Removing ads should remove forced interstitials.
+
+Rewarded ads remain optional unless product strategy later changes.
+
+---
+
+# 34. STARTER PACK
+
+Optional purchase:
+
+Starter Pack
+
+Contains:
+
+* gems
+* coins
+* boosters
+* exclusive bottle skin
+
+Do not make it mandatory.
+
+---
+
+# 35. LEVEL GENERATION SYSTEM
+
+This is a critical technical component.
+
+Do NOT manually create every level.
+
+Build a procedural level-generation pipeline.
+
+The generator should accept parameters:
+
+* number of bottles
+* bottle capacity
+* number of colors
+* number of empty bottles
+* difficulty
+* move complexity
+* blockers
+* special mechanics
+* objectives
+
+Example:
+
+LevelConfig:
+
+colors = 4
+bottles = 6
+capacity = 4
+emptyBottles = 2
+difficulty = medium
+
+---
+
+# 36. LEVEL SOLVER
+
+Every generated level must be verified by a solver.
+
+The solver should determine:
+
+1. Is the level solvable?
+2. Minimum/near-minimum number of moves.
+3. Search complexity.
+4. Whether the level is trivial.
+5. Whether the level is excessively difficult.
+6. Whether the level has meaningful decision points.
+
+Never publish an unverified level.
+
+---
+
+# 37. DIFFICULTY RATING
+
+Calculate a difficulty score using:
+
+* minimum solution moves
+* branching factor
+* number of colors
+* bottle count
+* empty bottle count
+* blocker count
+* special mechanics
+* estimated search depth
+
+Create:
+
+EASY
+NORMAL
+HARD
+EXPERT
+MASTER
+
+Do not rely only on number of colors to determine difficulty.
+
+---
+
+# 38. ANTI-REPETITION
+
+The generator must detect:
+
+* duplicate levels
+* near-duplicate layouts
+* identical move patterns
+* trivial rearrangements
+
+Use canonical board representation.
+
+Store a level fingerprint/hash.
+
+Never intentionally generate the same level twice unless it is a daily/replay challenge.
+
+---
+
+# 39. FAIRNESS
+
+Levels should never depend on:
+
+* random luck
+* hidden information without sufficient clues
+* impossible timing
+* forced purchases
+
+The player should lose because of a decision, not because the game cheated.
+
+---
+
+# 40. ADAPTIVE DIFFICULTY
+
+Track player performance.
+
+Metrics:
+
+* completion time
+* number of moves
+* restarts
+* failed attempts
+* hint usage
+* booster usage
+* undo usage
+
+If the player consistently completes levels extremely easily:
+
+Increase difficulty gradually.
+
+If the player repeatedly fails:
+
+Reduce difficulty slightly or introduce assistance.
+
+Do not make difficulty changes obvious.
+
+---
+
+# 41. GAME STATES
+
+The game engine must support:
+
+IDLE
+
+SELECTING_SOURCE
+
+SELECTING_TARGET
+
+VALIDATING_MOVE
+
+POURING
+
+RESOLVING_COMBO
+
+RESOLVING_SPECIAL
+
+CHECKING_OBJECTIVES
+
+LEVEL_COMPLETE
+
+LEVEL_FAILED
+
+PAUSED
+
+RESTARTING
+
+---
+
+# 42. UNDO SYSTEM
+
+Every move must be reversible.
+
+Store board snapshots or efficient move deltas.
+
+Undo should correctly restore:
+
+* bottle contents
+* blockers
+* objective counters
+* special effects
+* combo state
+* move counter
+
+Do not allow state corruption after multiple undos.
+
+---
+
+# 43. SAVE SYSTEM
+
+Save:
+
+* current level
+* current board
+* moves
+* stars
+* currencies
+* boosters
+* cosmetics
+* world progression
+* daily streak
+* achievements
+
+Core progress should survive app restarts.
+
+---
+
+# 44. OFFLINE-FIRST
+
+The game should remain playable without internet.
+
+If offline:
+
+Allow:
+
+* normal levels
+* local progression
+* local currency
+* local boosters
+
+When online:
+
+Sync safely.
+
+Resolve conflicts intelligently.
+
+Never overwrite advanced progress with older cloud state.
+
+---
+
+# 45. SUPABASE BACKEND
+
+Use Supabase for:
+
+* authentication
+* player profile
+* cloud save
+* level metadata
+* daily challenges
+* event configuration
+* leaderboard data
+* remote configuration
+* analytics aggregation where appropriate
+
+Do NOT store every gameplay move remotely.
+
+Core gameplay should be local.
+
+---
+
+# 46. DATABASE DESIGN
+
+Suggested tables:
+
+users
+
+profiles
+
+player_progress
+
+player_currencies
+
+player_inventory
+
+player_cosmetics
+
+levels
+
+level_versions
+
+daily_challenges
+
+daily_scores
+
+events
+
+event_progress
+
+achievements
+
+leaderboards
+
+remote_config
+
+purchases
+
+analytics_events
+
+Design proper indexes.
+
+Use Row Level Security.
+
+Players should only be able to modify their own protected records.
+
+Do not trust client-side currency values blindly.
+
+---
+
+# 47. SECURITY
+
+Never trust the mobile client for:
+
+* premium currency
+* purchase validation
+* leaderboard scores
+* event rewards
+
+Validate important operations server-side.
+
+Implement:
+
+* RLS
+* authenticated requests
+* server-side validation
+* purchase verification
+* rate limiting where appropriate
+
+Do not expose service-role credentials inside the Flutter application.
+
+---
+
+# 48. UI/UX STYLE
+
+The visual identity should be:
+
+MAGICAL
+COLORFUL
+POLISHED
+FRIENDLY
+SATISFYING
+PREMIUM BUT CASUAL
+
+Avoid making it visually identical to Candy Crush.
+
+Use original:
+
+* bottle shapes
+* typography
+* icons
+* world map
+* characters
+* colors
+* animations
+
+---
+
+# 49. MAIN HOME SCREEN
+
+Display:
+
+Top:
+
+Player avatar
+Level
+Coins
+Gems
+
+Center:
+
+CONTINUE button
+
+Current world / level
+
+Progress toward next unlock.
+
+Bottom navigation:
+
+HOME
+MAP
+LAB
+EVENTS
+SHOP
+
+Keep the home screen uncluttered.
+
+---
+
+# 50. LEVEL SCREEN
+
+Required elements:
+
+Top:
+
+Back
+Level number
+Moves remaining
+Objectives
+
+Center:
+
+Puzzle board
+
+Bottom:
+
+Undo
+Hint
+Booster
+Restart
+
+Avoid covering the puzzle.
+
+The puzzle should occupy most of the screen.
+
+---
+
+# 51. LEVEL COMPLETE SCREEN
+
+Animation:
+
+Confetti / potion burst.
+
+Show:
+
+LEVEL COMPLETE!
+
+Stars earned:
+
+⭐⭐⭐
+
+Moves:
+
+27
+
+Coins:
+
++50
+
+Optional:
+
+DOUBLE REWARD
+
+Watch Ad
+
+Buttons:
+
+NEXT LEVEL
+
+REPLAY
+
+MAP
+
+Do not make ads the dominant UI element.
+
+---
+
+# 52. LEVEL FAILURE
+
+Show:
+
+TRY AGAIN
+
+Reason:
+
+Out of moves / puzzle locked / challenge failed.
+
+Buttons:
+
+TRY AGAIN
+
+USE BOOSTER
+
+WATCH AD FOR HELP
+
+MAP
+
+Do not punish the player emotionally.
+
+Use encouraging copy.
+
+---
+
+# 53. MAP SCREEN
+
+Show:
+
+World name.
+
+Path of levels.
+
+Completed levels.
+
+Current level.
+
+Locked levels.
+
+Boss nodes.
+
+Special event nodes.
+
+Use smooth scrolling.
+
+---
+
+# 54. LAB SCREEN
+
+Display player's laboratory.
+
+Players can:
+
+* place decorations
+* change bottle display
+* change themes
+* view collection
+* see progression
+
+This should become the game's long-term emotional attachment layer.
+
+---
+
+# 55. SHOP
+
+Categories:
+
+BOOSTERS
+
+COSMETICS
+
+GEMS
+
+SPECIAL OFFERS
+
+REMOVE ADS
+
+Avoid dark patterns.
+
+Clearly communicate:
+
+* price
+* contents
+* whether purchase is permanent
+* whether item is consumable
+
+---
+
+# 56. ACCESSIBILITY
+
+Support:
+
+* colorblind mode
+* high contrast
+* larger text where practical
+* reduced motion
+* sound/music controls
+* haptic feedback toggle
+
+Do not rely exclusively on color.
+
+Use:
+
+* patterns
+* symbols
+* textures
+* icons
+
+for important colors.
+
+---
+
+# 57. AUDIO
+
+Audio should reinforce:
+
+* bottle selection
+* pouring
+* successful match
+* combo
+* blocker destruction
+* special potion creation
+* level completion
+
+Keep audio relaxing.
+
+Avoid annoying repetitive sounds.
+
+Allow separate:
+
+Music ON/OFF
+
+SFX ON/OFF
+
+Haptics ON/OFF
+
+---
+
+# 58. HAPTICS
+
+Use subtle haptic feedback for:
+
+* selecting bottle
+* successful pour
+* invalid move
+* special creation
+* blocker break
+* level completion
+
+Do not overuse vibration.
+
+---
+
+# 59. ANIMATION PRINCIPLES
+
+The game should feel physically satisfying.
+
+Pour animation:
+
+1. Bottle tilts.
+2. Liquid moves.
+3. Stream flows.
+4. Destination fills.
+5. Bottle returns upright.
+
+Use easing curves.
+
+Special effects should be short and satisfying.
+
+Do not delay gameplay unnecessarily.
+
+Animation duration should generally be short enough to maintain game flow.
+
+---
+
+# 60. PERFORMANCE
+
+Target:
+
+60 FPS on mainstream Android devices.
+
+Avoid:
+
+* unnecessary rebuilds
+* heavy particle effects
+* excessive widget nesting
+* memory leaks
+* large unoptimized assets
+
+Use efficient rendering.
+
+Test on:
+
+* low-end Android
+* mid-range Android
+* flagship Android
+
+---
+
+# 61. ARCHITECTURE
+
+Use clean, maintainable architecture.
+
+Suggested:
+
+presentation/
+
+domain/
+
+data/
+
+core/
+
+game/
+
+services/
+
+models/
+
+repositories/
+
+Use clear separation between:
+
+UI
+
+game state
+
+puzzle engine
+
+level generation
+
+backend
+
+analytics
+
+monetization
+
+Do not place game logic directly inside UI widgets.
+
+---
+
+# 62. STATE MANAGEMENT
+
+Use a robust state management solution suitable for Flutter.
+
+The game state should be deterministic.
+
+Avoid global mutable state wherever possible.
+
+Represent a level with a serializable model.
+
+Example conceptual structure:
+
+GameState
+
+* levelId
+* bottles
+* moves
+* objectives
+* boosters
+* combo
+* status
+
+---
+
+# 63. LEVEL DATA FORMAT
+
+Use JSON-compatible level definitions.
+
+Example conceptual structure:
+
+{
+"id": 42,
+"world": 1,
+"difficulty": "medium",
+"capacity": 4,
+"bottles": [...],
+"objectives": [...],
+"maxMoves": 30,
+"specialMechanics": [...],
+"recommendedStars": {...}
+}
+
+Make level definitions versioned.
+
+---
+
+# 64. ANALYTICS
+
+Track:
+
+level_started
+
+level_completed
+
+level_failed
+
+level_restarted
+
+move_made
+
+undo_used
+
+hint_used
+
+booster_used
+
+ad_started
+
+ad_completed
+
+purchase_started
+
+purchase_completed
+
+daily_challenge_started
+
+daily_challenge_completed
+
+world_unlocked
+
+cosmetic_unlocked
+
+session_started
+
+session_ended
+
+Do not collect unnecessary personal information.
+
+---
+
+# 65. IMPORTANT PRODUCT METRICS
+
+Monitor:
+
+DAU
+
+MAU
+
+D1 retention
+
+D3 retention
+
+D7 retention
+
+D30 retention
+
+Average session duration
+
+Levels/session
+
+Levels/user/day
+
+Level completion rate
+
+Failure rate
+
+Restart rate
+
+Hint usage
+
+Booster usage
+
+Rewarded ad opt-in rate
+
+Interstitial frequency
+
+IAP conversion
+
+ARPU
+
+ARPDAU
+
+Uninstall rate
+
+---
+
+# 66. FUNNEL
+
+Measure:
+
+Install
+
+↓
+
+Tutorial
+
+↓
+
+Level 1
+
+↓
+
+Level 5
+
+↓
+
+Level 10
+
+↓
+
+First booster
+
+↓
+
+First difficult level
+
+↓
+
+First world completion
+
+↓
+
+First daily challenge
+
+↓
+
+First purchase
+
+Identify where players drop.
+
+---
+
+# 67. TUTORIAL
+
+Do not use a long tutorial.
+
+The player should learn by playing.
+
+Level 1:
+
+Basic pouring.
+
+Level 2:
+
+Matching colors.
+
+Level 3:
+
+Empty bottle strategy.
+
+Level 4:
+
+Undo.
+
+Level 5:
+
+First objective.
+
+Level 6+:
+
+Introduce additional systems slowly.
+
+---
+
+# 68. FIRST 20 LEVELS
+
+Design the first 20 levels intentionally.
+
+Do not randomly generate the onboarding experience.
+
+The first 20 levels should teach:
+
+1. Basic pouring
+2. Matching
+3. Empty bottles
+4. Planning
+5. Undo
+6. Stars
+7. Objectives
+8. Coins
+9. Hint
+10. First challenge
+    11–15. Increased complexity
+11. First blocker
+12. First booster
+13. More strategic puzzle
+14. Mini challenge
+15. First meaningful milestone
+
+The player should understand the complete game loop by Level 20.
+
+---
+
+# 69. DIFFICULTY CURVE
+
+Avoid:
+
+Easy → Easy → Easy → Suddenly Impossible
+
+Instead:
+
+Easy
+Easy
+Easy+
+Normal-
+Normal
+Normal+
+Hard-
+Hard
+Hard+
+
+Use difficulty ramps and occasional relaxation levels.
+
+After a difficult level, consider giving the player a slightly easier level.
+
+---
+
+# 70. "ONE MORE LEVEL" DESIGN
+
+The game should create a natural desire to continue.
+
+Use:
+
+* short levels
+* clear progress
+* rewards
+* unlockable content
+* near-completion feedback
+* daily challenges
+* streaks
+* collection
+* events
+
+Do NOT rely on frustration to create retention.
+
+---
+
+# 71. SOCIAL FEATURES
+
+Initial release:
+
+Optional leaderboard.
+
+Do not require social login.
+
+Possible future features:
+
+* friends
+* challenge friends
+* share level result
+* weekly competitions
+
+---
+
+# 72. LEADERBOARD FAIRNESS
+
+Leaderboard scores should be server validated.
+
+Do not allow arbitrary client-submitted scores.
+
+Consider ranking by:
+
+* moves
+* time
+* score
+
+For daily challenge, everyone receives the same puzzle.
+
+---
+
+# 73. ANTI-CHEAT
+
+Protect:
+
+* leaderboard
+* currencies
+* premium items
+* event rewards
+
+Detect suspicious:
+
+* impossible completion times
+* impossible move counts
+* abnormal currency changes
+* impossible level progression
+
+Do not falsely ban legitimate players.
+
+---
+
+# 74. REMOTE CONFIG
+
+Build a remote configuration layer.
+
+Configurable values:
+
+* ad frequency
+* reward amounts
+* booster prices
+* level difficulty
+* event duration
+* daily reward amounts
+* IAP offers
+* feature flags
+
+Do not require app release for simple balance changes.
+
+---
+
+# 75. CONTENT PIPELINE
+
+Create tools/scripts to:
+
+1. Generate level.
+2. Solve level.
+3. Calculate difficulty.
+4. Validate level.
+5. Generate fingerprint.
+6. Export JSON.
+7. Import into database.
+8. Mark production-ready.
+
+Provide an internal level editor if practical.
+
+---
+
+# 76. LEVEL EDITOR
+
+If possible, create a developer-only level editor.
+
+Features:
+
+* Add/remove bottle
+* Set capacity
+* Add colors
+* Add blockers
+* Add special mechanics
+* Set objectives
+* Preview level
+* Run solver
+* Show minimum moves
+* Show difficulty
+* Test level
+* Export JSON
+
+This tool is extremely important for long-term content production.
+
+---
+
+# 77. GENERATED LEVEL QUALITY
+
+Every generated level must pass:
+
+VALIDITY CHECK
+
+SOLVABILITY CHECK
+
+DIFFICULTY CHECK
+
+DUPLICATE CHECK
+
+OBJECTIVE CHECK
+
+SPECIAL MECHANIC CHECK
+
+FAIRNESS CHECK
+
+Only then:
+
+PUBLISHABLE
+
+---
+
+# 78. ERROR HANDLING
+
+Gracefully handle:
+
+* corrupted save
+* invalid level data
+* missing asset
+* backend unavailable
+* ad unavailable
+* purchase failure
+* cloud sync conflict
+
+The player should never lose progress because of a network error.
+
+---
+
+# 79. OFFLINE/ONLINE BEHAVIOR
+
+If internet is unavailable:
+
+Show:
+
+"You are offline. Your progress is saved on this device."
+
+Do not block normal gameplay.
+
+When connection returns:
+
+Synchronize.
+
+---
+
+# 80. APP STARTUP
+
+Startup should be fast.
+
+Do not load the entire world/level database into memory.
+
+Load required data progressively.
+
+Cache essential levels locally.
+
+---
+
+# 81. ART DIRECTION
+
+Create a recognizable visual identity.
+
+Theme:
+
+MAGICAL ALCHEMY
+
+Materials:
+
+* glass
+* glowing liquids
+* wood
+* crystal
+* magical particles
+
+Use soft, premium casual-game visuals.
+
+Do not reproduce another game's assets.
+
+---
+
+# 82. CHARACTER
+
+Introduce one original mascot/alchemist character.
+
+Example concept:
+
+A young magical alchemist who guides the player.
+
+The character can:
+
+* react to level completion
+* celebrate milestones
+* introduce mechanics
+* appear in events
+
+Keep dialogue minimal.
+
+Do not turn the game into a story-heavy RPG.
+
+---
+
+# 83. RETENTION LOOP
+
+Primary:
+
+PLAY LEVEL
+
+↓
+
+EARN REWARD
+
+↓
+
+UNLOCK
+
+↓
+
+PLAY NEXT LEVEL
+
+Secondary:
+
+DAILY CHALLENGE
+
+↓
+
+STREAK
+
+↓
+
+REWARD
+
+Tertiary:
+
+EVENT
+
+↓
+
+COLLECT COSMETIC
+
+↓
+
+UPGRADE LAB
+
+---
+
+# 84. PLAYER PSYCHOLOGY
+
+The game should provide:
+
+Immediate feedback
+
+Progress visibility
+
+Mastery
+
+Collection
+
+Surprise
+
+Anticipation
+
+Achievement
+
+Do not exploit:
+
+* gambling mechanics
+* deceptive timers
+* fake scarcity
+* manipulative purchase prompts
+
+---
+
+# 85. GAME BALANCE
+
+Do not optimize purely for monetization.
+
+Optimize:
+
+FUN
+
+RETENTION
+
+FAIRNESS
+
+THEN MONETIZATION
+
+If players are quitting because of ads, reduce ads.
+
+If boosters make the game trivial, rebalance boosters.
+
+If levels are too hard, adjust the generator.
+
+---
+
+# 86. MVP SCOPE
+
+For Version 1.0 implement:
+
+### Core
+
+* Water Sort-style potion sorting
+* 300 polished levels
+* 5 worlds
+* 3-star system
+* replay
+* undo
+* hint
+* extra bottle
+
+### Gameplay
+
+* 5+ objectives
+* 4+ blockers/special mechanics
+* combo system
+* special potions
+
+### Retention
+
+* daily challenge
+* daily streak
+* achievements
+* level map
+
+### Customization
+
+* 5 bottle skins
+* 5 potion themes
+
+### Monetization
+
+* rewarded ads
+* controlled interstitials
+* remove ads IAP
+* starter pack
+
+### Backend
+
+* Supabase authentication
+* cloud save
+* daily challenge
+* leaderboard
+* remote config
+
+---
+
+# 87. POST-LAUNCH CONTENT
+
+Version 1.1:
+
+* 100 additional levels
+* new world
+* new blocker
+* new special potion
+* new event
+
+Version 1.2:
+
+* weekly tournaments
+* more cosmetics
+* player lab upgrades
+
+Version 1.3:
+
+* social challenges
+* friend leaderboard
+* advanced events
+
+---
+
+# 88. DEVELOPMENT PHASES
+
+## PHASE 1 — GAME PROTOTYPE
+
+Implement only:
+
+* bottle
+* liquid
+* pour
+* legal move
+* undo
+* win detection
+* restart
+
+No backend.
+
+No monetization.
+
+Goal:
+
+Prove the core mechanic is fun.
+
+---
+
+## PHASE 2 — LEVEL ENGINE
+
+Implement:
+
+* level JSON
+* solver
+* generator
+* difficulty scoring
+* level validation
+
+Goal:
+
+Create scalable content.
+
+---
+
+## PHASE 3 — SPECIAL MECHANICS
+
+Implement:
+
+* blockers
+* special potions
+* objectives
+* combos
+
+---
+
+## PHASE 4 — PROGRESSION
+
+Implement:
+
+* stars
+* coins
+* gems
+* worlds
+* map
+* lab
+* collection
+
+---
+
+## PHASE 5 — RETENTION
+
+Implement:
+
+* daily challenge
+* streak
+* achievements
+* events
+
+---
+
+## PHASE 6 — MONETIZATION
+
+Implement:
+
+* rewarded ads
+* interstitial frequency controls
+* IAP
+* shop
+
+---
+
+## PHASE 7 — BACKEND
+
+Implement:
+
+* Supabase
+* cloud save
+* leaderboard
+* remote config
+* event system
+
+---
+
+## PHASE 8 — POLISH
+
+Focus on:
+
+* animation
+* sound
+* haptics
+* accessibility
+* performance
+* onboarding
+* UX
+
+---
+
+# 89. QA
+
+Test:
+
+* every legal move
+* every illegal move
+* undo
+* restart
+* app kill during level
+* orientation changes where supported
+* background/foreground
+* offline mode
+* cloud sync
+* duplicate level prevention
+* booster interactions
+* blocker interactions
+* special potion interactions
+* IAP
+* rewarded ads
+* interstitial cooldowns
+
+Test on multiple Android devices.
+
+---
+
+# 90. CRITICAL RULES FOR THE DEVELOPMENT AGENT
+
+1. Do not build everything at once.
+2. Build the core puzzle engine first.
+3. Keep the game deterministic.
+4. Keep game logic independent from UI.
+5. Do not hardcode levels inside widgets.
+6. Do not hardcode economy values throughout the code.
+7. Use configuration.
+8. Make level generation testable.
+9. Build a solver before generating hundreds of levels.
+10. Never ship unsolved levels.
+11. Do not copy copyrighted assets.
+12. Do not clone Candy Crush's visual identity.
+13. Do not clone Water Sort's exact UI.
+14. Build an original visual identity.
+15. Keep ads controlled.
+16. Make the game playable without spending money.
+17. Protect cloud data.
+18. Validate important rewards server-side.
+19. Optimize for fun before monetization.
+20. Build systems that can support future content.
+
+---
+
+# 91. EXPECTED OUTPUT FROM THE DEVELOPMENT AGENT
+
+Before writing significant code, produce:
+
+1. Complete technical architecture.
+2. Folder structure.
+3. Game-state architecture.
+4. Level data schema.
+5. Level solver design.
+6. Level generator design.
+7. Difficulty algorithm.
+8. Database schema.
+9. Supabase RLS strategy.
+10. Monetization architecture.
+11. Analytics event schema.
+12. Screen list.
+13. Navigation architecture.
+14. Game progression architecture.
+15. Booster architecture.
+16. Special mechanic architecture.
+
+Then implement in phases.
+
+After each phase:
+
+* run tests
+* verify functionality
+* identify bugs
+* explain what was completed
+* explain what remains
+
+Do not pretend a feature is complete if it is only mocked.
+
+---
+
+# 92. SUCCESS CRITERIA
+
+The final product should feel like:
+
+"Water Sort, but evolved into a complete casual puzzle adventure."
+
+A new player should understand the basic mechanic within 30 seconds.
+
+The game should become strategically interesting within approximately 10 levels.
+
+The first special mechanic should appear early enough to prevent repetition.
+
+The player should have a meaningful progression goal.
+
+Players should have reasons to return daily.
+
+Monetization should feel optional rather than forced.
+
+The game should be scalable to thousands of levels.
+
+The architecture should support years of content updates.
+
+---
+
+# 93. FINAL PRODUCT PRINCIPLE
+
+The most important design principle is:
+
+## SIMPLE TO LEARN.
+
+## HARD TO MASTER.
+
+## SATISFYING TO PLAY.
+
+## REWARDING TO PROGRESS.
+
+The player should open the game thinking:
+
+"I'll play one level."
+
+And naturally end up thinking:
+
+"Okay, one more."
+
+That "one more level" feeling is the primary product goal.
+
+Do not sacrifice it for excessive ads, unnecessary complexity, or aggressive monetization.
+
+Build the game around the satisfaction of:
+
+POUR → SORT → COMBO → SPECIAL POTION → OBJECTIVE COMPLETE → REWARD → UNLOCK → ONE MORE LEVEL.
